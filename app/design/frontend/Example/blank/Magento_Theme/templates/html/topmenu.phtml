@@ -1,0 +1,28 @@
+<?php
+/**
+ * Project: Magento Example
+ * Author: Eshcole Peets.
+ */
+
+/**
+ * Top menu for store.
+ *
+ * @var \Magento\Theme\Block\Html\Topmenu $block
+ */
+$columnsLimit = $block->getColumnsLimit() ?: 0;
+$_menuHtml = $block->getHtml('level-top', 'submenu', $columnsLimit);
+?>
+
+<nav class="navigation" data-action="navigation">
+    <ul data-mage-init='{"menu":{"responsive":true, "expanded":true, "position":{"my":"left top","at":"left bottom"}}}'>
+        <li class="level0 nav-1 parent">
+            <a href="#">
+                <span>Categories</span>
+            </a>
+            <ul class="submenu">
+                <?php echo // @noEscape
+                $_menuHtml; ?>
+            </ul>
+        </li>
+    </ul>
+</nav>
