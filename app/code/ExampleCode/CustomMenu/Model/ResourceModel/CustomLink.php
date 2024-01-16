@@ -3,6 +3,7 @@
  * Project: Magento Example
  * Author: Eshcole Peets
  */
+declare(strict_types=1);
 
 namespace ExampleCode\CustomMenu\Model\ResourceModel;
 
@@ -15,7 +16,6 @@ class CustomLink extends AbstractDb
      */
     protected function _construct()
     {
-        // TODO: Implement _construct() method.
         $this->_init('example_menu_custom_links', 'link_id');
     }
 }

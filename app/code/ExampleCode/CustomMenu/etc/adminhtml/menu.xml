@@ -7,6 +7,6 @@
 -->
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
     <menu>
-        <add id="ExampleCode_CustomMenu::links" title="Custom Menu" module="ExampleCode_CustomMenu" sortOrder="1000" parent="Magento_Catalog::catalog" dependsOnModule="ExampleCode_CustomMenu" resource="Magento_Catalog::catalog" action="custom_menu/index/index" />
+        <add id="ExampleCode_CustomMenu::links" title="Custom Menu" module="ExampleCode_CustomMenu" sortOrder="1000" parent="Magento_Catalog::catalog" dependsOnModule="ExampleCode_CustomMenu" resource="ExampleCode_CustomMenu::config" action="custom_menu/links/index" />
     </menu>
 </config>

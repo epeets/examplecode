@@ -3,17 +3,14 @@
  * Project: Magento Example
  * Author: Eshcole Peets.
  */
+declare(strict_types=1);
 
-namespace ExampleCode\CustomMenu\Ui\DataProvider\Links\Listing\Column;
+namespace ExampleCode\CustomMenu\Ui\Component\Listing;
 
 use Magento\Catalog\Ui\Component\ColumnFactory;
 use Magento\Catalog\Ui\Component\Listing\Attribute\RepositoryInterface;
-use Magento\Framework\Exception\LocalizedException;
-use Magento\Framework\View\Element\UiComponent\ContextInterface;
-use Magento\Framework\View\Element\UiComponentFactory;
-use Magento\Ui\Component\Listing\Columns\Column;
 
-class Actions extends Column
+class Columns extends \Magento\Ui\Component\Listing\Columns
 {
     /**
      * Default columns max order value.
@@ -31,25 +28,24 @@ class Actions extends Column
         'datetime' => 'datetimeRange',
     ];
 
+    /**
+     * @var ColumnFactory
+     */
     private ColumnFactory $columnFactory;
 
     public function __construct(
-        ContextInterface $context,
-        UiComponentFactory $uiComponentFactory,
+        \Magento\Framework\View\Element\UiComponent\ContextInterface $context,
         ColumnFactory $columnFactory,
         RepositoryInterface $attributeRepository,
         array $components = [],
         array $data = []
     ) {
-        parent::__construct($context, $uiComponentFactory, $components, $data);
+        parent::__construct($context, $components, $data);
         $this->columnFactory = $columnFactory;
         $this->attributeRepository = $attributeRepository;
     }
 
-    /**
-     * @throws LocalizedException
-     */
-    public function prepare(): void
+    public function prepare()
     {
         $columnSortOrder = self::DEFAULT_COLUMNS_MAX_ORDER;
         foreach ($this->attributeRepository->getList() as $attribute) {
@@ -71,8 +67,10 @@ class Actions extends Column
      * Retrieve filter type by $frontendInput.
      *
      * @param string $frontendInput
+     *
+     * @return string
      */
-    protected function getFilterType($frontendInput): string
+    protected function getFilterType($frontendInput)
     {
         return $this->filterMap[$frontendInput] ?? $this->filterMap['default'];
     }

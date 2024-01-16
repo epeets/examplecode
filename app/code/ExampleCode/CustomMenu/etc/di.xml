@@ -7,18 +7,35 @@
 -->
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <preference for="ExampleCode\CustomMenu\Api\CustomLinkRepositoryInterface" type="ExampleCode\CustomMenu\Model\ResourceModel\CustomLinkRepository" />
+    <preference for="ExampleCode\CustomMenu\Api\Data\CustomLinkInterface" type="ExampleCode\CustomMenu\Model\CustomLink" />
+    <preference for="ExampleCode\CustomMenu\Api\Data\CustomLinkSearchResultsInterface" type="ExampleCode\CustomMenu\Model\ResourceModel\CustomLink\Collection" />
+    <virtualType name="ExampleCode\CustomMenu\Virtual\Model\Api\SearchCriteria\CustomLinkCollectionProcessor" type="Magento\Framework\Api\SearchCriteria\CollectionProcessor">
+        <arguments>
+            <argument name="processors" xsi:type="array">
+                <item name="filters" xsi:type="object">Magento\Framework\Api\SearchCriteria\CollectionProcessor\FilterProcessor</item>
+                <item name="sorting" xsi:type="object">Magento\Framework\Api\SearchCriteria\CollectionProcessor\SortingProcessor</item>
+                <item name="pagination" xsi:type="object">Magento\Framework\Api\SearchCriteria\CollectionProcessor\PaginationProcessor</item>
+            </argument>
+        </arguments>
+    </virtualType>
+    <type name="ExampleCode\CustomMenu\Model\ResourceModel\CustomLinkRepository">
+        <arguments>
+            <argument name="collectionProcessor" xsi:type="object">ExampleCode\CustomMenu\Virtual\Model\Api\SearchCriteria\CustomLinkCollectionProcessor</argument>
+            <argument name="hydrator" xsi:type="object">Magento\Framework\EntityManager\AbstractModelHydrator</argument>
+        </arguments>
+    </type>
     <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
         <arguments>
             <argument name="collections" xsi:type="array">
-                <item name="custom_menu_custom_links_data_source" xsi:type="string">CustomMenuLinksCollection</item>
+                <item name="custom_link_listing_data_source" xsi:type="string">ExampleCode\CustomMenu\Model\ResourceModel\CustomLink\VirtualType\Collection</item>
             </argument>
         </arguments>
     </type>
-    <virtualType name="CustomMenuLinksCollection"
-                 type="ExampleCode\CustomMenu\Ui\DataProvider\Category\Listing\Collection">
+    <virtualType name="ExampleCode\CustomMenu\Model\ResourceModel\CustomLink\VirtualType\Collection" type="Magento\Framework\View\Element\UiComponent\DataProvider\SearchResult">
         <arguments>
             <argument name="mainTable" xsi:type="string">example_menu_custom_links</argument>
-            <argument name="resourceModel" xsi:type="string">ExampleCode\CustomMenu\Model\ResourceModel\Links</argument>
+            <argument name="resourceModel" xsi:type="string">ExampleCode\CustomMenu\Model\ResourceModel\CustomLink</argument>
         </arguments>
     </virtualType>
 </config>

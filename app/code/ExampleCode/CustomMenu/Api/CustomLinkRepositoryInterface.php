@@ -3,6 +3,7 @@
  * Project: Magento Example
  * Author: Eshcole Peets
  */
+declare(strict_types=1);
 
 namespace ExampleCode\CustomMenu\Api;
 

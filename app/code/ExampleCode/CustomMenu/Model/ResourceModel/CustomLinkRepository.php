@@ -3,6 +3,7 @@
  * Project: Magento Example
  * Author: Eshcole Peets.
  */
+declare(strict_types=1);
 
 namespace ExampleCode\CustomMenu\Model\ResourceModel;
 
@@ -21,6 +22,7 @@ use Magento\Framework\Exception\LocalizedException;
 use Magento\Framework\Exception\NoSuchEntityException;
 use Magento\Framework\Exception\State\InvalidTransitionException;
 use Magento\Framework\Model\AbstractModel;
+use ExampleCode\CustomMenu\Model\ResourceModel\CustomLink\CollectionFactory;
 
 class CustomLinkRepository implements CustomLinkRepositoryInterface
 {
@@ -30,9 +32,9 @@ class CustomLinkRepository implements CustomLinkRepositoryInterface
     private CustomLinkSearchResultsInterfaceFactory $customLinkSearchResultsInterfaceFactory;
 
     public function __construct(
-        CustomLinkResourceModel $customLinkResourceModel,
-        CustomLinkFactory $customLinkFactory,
-        CollectionProcessorInterface $collectionProcessor,
+        CustomLinkResourceModel                 $customLinkResourceModel,
+        CustomLinkFactory                       $customLinkFactory,
+        CollectionProcessorInterface            $collectionProcessor,
         CustomLinkSearchResultsInterfaceFactory $customLinkSearchResultsInterfaceFactory
     ) {
         $this->customLinkResourceModel = $customLinkResourceModel;
@@ -42,14 +44,17 @@ class CustomLinkRepository implements CustomLinkRepositoryInterface
     }
 
     /**
-     * @throws CouldNotSaveException
+     *
+     * @param CustomLinkInterface $customLink
+     * @return CustomLinkInterface
      * @throws AlreadyExistsException
-     * @throws LocalizedException
+     * @throws CouldNotSaveException
      * @throws InvalidTransitionException
+     * @throws LocalizedException
      */
     public function save(CustomLinkInterface $customLink): CustomLinkInterface
     {
-        if (!$customLink instanceof AbstractModel) {
+        if (!($customLink instanceof AbstractModel)) {
             throw new CouldNotSaveException(__('The implementation of CustomLinkInterface has changed.'));
         }
 
@@ -60,7 +65,7 @@ class CustomLinkRepository implements CustomLinkRepositoryInterface
         try {
             $this->customLinkResourceModel->save($customLink);
         } catch (\Magento\Framework\Exception\LocalizedException $e) {
-            if ($e->getMessage() == (string) __('Custom link already exists.')) {
+            if ($e->getMessage() == (string)__('Custom link already exists.')) {
                 throw new CouldNotSaveException(__('Custom link already exists.'));
             }
 
